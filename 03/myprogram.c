@@ -1,31 +1,44 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int fizzbuzz(int number)
+typedef struct MyList MyList;
+
+struct MyList {
+    int value;
+    MyList *next;
+};
+
+
+MyList * append(MyList *list, int data)
 {
-    if (number % 15 == 0)
+    MyList *new_item = malloc(sizeof(MyList));
+    if (new_item)
     {
-        printf("FizzBuzz\n");
-        return 0;
+        new_item->next = list;
+        new_item->value = data;
+        return new_item;
     }
-    else if (number % 3 == 0)
-    {
-        printf("Fizz\n");
-    }
-    else if (number % 5 == 0)
-    {
-        printf("Buzz\n");
-    }
-    else
-    {
-        printf("%d\n", number);
-    }
-    return number;
+    return NULL;
+}
+
+MyList * delete(MyList *list)
+{
+    MyList *tmp = list->next;
+    free(list);
+    return tmp;
 }
 
 int main(void)
 {
-    for (int i = 1; i<20; i++)
-    {
-        printf("%d\n", 42 / fizzbuzz(i));
-    }
+    printf("This is my list.\n");
+    MyList *mylist = append(NULL, 42);
+    mylist = append(mylist, 1);
+    mylist = append(mylist, 2);
+    mylist = append(mylist, 3);
+
+    printf("Starting to delete items.\n");
+    mylist = delete(mylist);
+    mylist = delete(mylist);
+    mylist = delete(mylist);
+    mylist = delete(mylist);
 }
